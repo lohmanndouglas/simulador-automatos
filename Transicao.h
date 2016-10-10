@@ -4,20 +4,19 @@
 #include <iostream>
 #include <string>
 
+class Estado;
+
 using namespace std;
 
 class Transicao{
     
     // variaveis
-    string estadoInicial;
-    string estadoFinal;
+   public:  
+    Estado *estadoDestino;
     string simboloTransicao;     
-  
-  public:
+    
     // construtor
-    Transicao(int x, int y);
-
+    //Transicao(Estado *ed, string s);
     // metodos
-
 };
 #endif
