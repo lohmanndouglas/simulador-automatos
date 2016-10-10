@@ -16,12 +16,7 @@ class Automato{
     boost::unordered_map <string, Estado>  mapStringInt;
   
   public:
-
     // construtor
     Automato(string arquivoEntrada);
-
-    // metodos
-    // void addTransicao(string estadoInicial, string estadoFinal, string simbolo);
-
 };
 #endif

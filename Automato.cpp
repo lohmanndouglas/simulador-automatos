@@ -52,8 +52,6 @@ Automato::Automato(string arquivoEntrada){
             }
         }while(iss2);
 
-//      add transição para cada estado 
-//      buscar na lista pela hash e atualizar
         cout << "Transições" << endl;
         istringstream iss3(est); 
         do {
@@ -61,7 +59,6 @@ Automato::Automato(string arquivoEntrada){
             iss3 >> estA;
             if(estA != ""){ // para o estado sub
                 getline(arq, data);
-                // cout << " ** Para Estado : " << estA << endl;
                 istringstream iss4(alf);
                 istringstream iss5(data); 
                 do {
@@ -73,34 +70,16 @@ Automato::Automato(string arquivoEntrada){
                         cout << "   Do estado " << estA ;
                         cout << " com o simbolo " << sub;
                         cout << " vai para " << estadosPos << endl;
+                        mapStringInt[estA].mapStringTransicao[sub] = mapStringInt[estadosPos]; 
                     }
                 }while(iss4);
             }
         }while(iss3);
 
-
-
-        // cout << "Conjunto de transições:"<< endl; 
-        // while(!arq.fail() && !arq.eof()){ // transições
-        //     getline(arq, data);
-        //     cout << data << endl;
-        // }
         arq.close();
-
-
 
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
         cout << "Automato não foi criado" << endl;
     }
 }
-
-            // istringstream iss3(est);
-            // do {
-            //     string sub;
-            //     iss3 >> sub;
-            //     if(sub != ""){
-            //         cout << "****** : " << sub << endl;
-            //          // mapStringInt[est].aceitavel = true;
-            //     }
-            // }while(iss3);
