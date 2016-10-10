@@ -12,11 +12,13 @@ class Estado{
          
   public:
   	string nome;
+  	bool inicial;
+    bool aceitavel;
     list<Transicao> listaTransicao;
 //    HallButton *hall_buttons[NUMBER_OF_FLOORS];
 	//array<Transicao> AdjacencyList=new array<Transicao>();
     // construtor
-    //Estado(string x,  y);
+    // Estado();
     // metodos
 };
 #endif

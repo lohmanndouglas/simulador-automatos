@@ -12,13 +12,8 @@ using namespace std;
 
 class Automato{
     // variaveis
-    Estado *listaEstados;
     int quantidadeEstados;
-    Estado estadoInicial;
-    Estado estadosAceitaveis[];
-    //map <string, int> mapeamento;
     boost::unordered_map <string, Estado>  mapStringInt;
-	// boost::unordered_map <std::string, Atributos>::iterator verify;
   
   public:
 

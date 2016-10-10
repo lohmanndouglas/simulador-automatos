@@ -6,14 +6,16 @@ Automato::Automato(string arquivoEntrada){
     ifstream arq;
     arq.open(arquivoEntrada.c_str());
     string data;
+    string alf;
+    string est;
 
     if (arq.is_open() && arq != NULL){
         cout << "Lendo arquivo" << endl; 
         cout << "=============" << endl; 
        
-        getline(arq, data); // estados
-        cout << "Estados: \n"<< data << endl; 
-        istringstream iss(data);
+        getline(arq, est); // estados
+        cout << "Estados: "<< est << endl; 
+        istringstream iss(est);
 
         // Adiciona estados
         quantidadeEstados = 0;
@@ -21,42 +23,84 @@ Automato::Automato(string arquivoEntrada){
             string sub;
             iss >> sub;
             if(sub != ""){
-                cout << "Substring: " << sub << endl;
+                // cout << "Estado: " << sub << endl;
+                mapStringInt[sub].nome = sub;
+                mapStringInt[sub].inicial = false;
+                mapStringInt[sub].aceitavel = false;
                 quantidadeEstados++;
             }
         }while(iss);
 
 
-//        Criar a lista de estados (passar o nome do estado);
-//        Criar a hash 
-        // listaEstados=new Estado[quantidadeEstados];
-        // for(int i=0;i<quantidadeEstados;i++){
-        //      listaEstados[i]=new Estado;
-        // }
-
-        getline(arq, data); // alfabeto
-        cout << "Alfabeto: \n"<< data << endl; 
+        getline(arq, alf); // alfabeto
+        cout << "Alfabeto: "<< alf << endl; 
        
         getline(arq, data); // estado inicial
-        cout << "Estado inicial: \n"<< data << endl; 
-
-
-        //estadoInicial = new Estado();
+        mapStringInt[data].inicial = true;
+        cout << "Estado inicial: "<< data << endl; 
        
         getline(arq, data); // estados finais 
-        cout << "Estado(s) fina(l|is): \n"<< data << endl;
+        // cout << "Estado(s) fina(l|is): \n"<< data << endl;
+    
+        istringstream iss2(data);
+        do {
+            string sub;
+            iss2 >> sub;
+            if(sub != ""){
+                cout << "Estado aceitavel: " << sub << endl;
+                mapStringInt[sub].aceitavel = true;
+            }
+        }while(iss2);
 
 //      add transição para cada estado 
 //      buscar na lista pela hash e atualizar
-        cout << "Conjunto de transições:"<< endl; 
-        while(!arq.fail() && !arq.eof()){ // transições
-            getline(arq, data);
-            cout << data << endl; 
-        }
+        cout << "Transições" << endl;
+        istringstream iss3(est); 
+        do {
+            string estA;
+            iss3 >> estA;
+            if(estA != ""){ // para o estado sub
+                getline(arq, data);
+                // cout << " ** Para Estado : " << estA << endl;
+                istringstream iss4(alf);
+                istringstream iss5(data); 
+                do {
+                    string estadosPos;
+                    string sub;
+                    iss4 >> sub;
+                    iss5 >> estadosPos;
+                    if(sub != ""){ // para cada letra do alfabeto
+                        cout << "   Do estado " << estA ;
+                        cout << " com o simbolo " << sub;
+                        cout << " vai para " << estadosPos << endl;
+                    }
+                }while(iss4);
+            }
+        }while(iss3);
+
+
+
+        // cout << "Conjunto de transições:"<< endl; 
+        // while(!arq.fail() && !arq.eof()){ // transições
+        //     getline(arq, data);
+        //     cout << data << endl;
+        // }
         arq.close();
+
+
+
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
         cout << "Automato não foi criado" << endl;
     }
 }
 
+            // istringstream iss3(est);
+            // do {
+            //     string sub;
+            //     iss3 >> sub;
+            //     if(sub != ""){
+            //         cout << "****** : " << sub << endl;
+            //          // mapStringInt[est].aceitavel = true;
+            //     }
+            // }while(iss3);
