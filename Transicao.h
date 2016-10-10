@@ -11,12 +11,13 @@ using namespace std;
 class Transicao{
     
     // variaveis
+   public:  
     Estado *estadoDestino;
     string simboloTransicao;     
   
-  public:
+
     // construtor
-    Transicao(Estado *ed, string s);
+    //Transicao(Estado *ed, string s);
     // metodos
 };
 #endif

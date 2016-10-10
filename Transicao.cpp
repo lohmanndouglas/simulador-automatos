@@ -1,6 +1,6 @@
-#include "Transicao.h"
+// #include "Transicao.h"
 
-Transicao::Transicao(Estado *ed, string s){
-    estadoDestino = ed;
-    simboloTransicao = s; 
-}
+// Transicao::Transicao(Estado *ed, string s){
+//     estadoDestino = ed;
+//     simboloTransicao = s; 
+// }

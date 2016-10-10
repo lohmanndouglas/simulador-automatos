@@ -70,7 +70,9 @@ Automato::Automato(string arquivoEntrada){
                         cout << "   Do estado " << estA ;
                         cout << " com o simbolo " << sub;
                         cout << " vai para " << estadosPos << endl;
-                        mapStringInt[estA].mapStringTransicao[sub] = mapStringInt[estadosPos]; 
+                        //mapStringInt[estadosPos].nome = "estadosPos";
+                        mapStringInt[estA].mapStringTransicao[sub].simboloTransicao = sub; 
+                        mapStringInt[estA].mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
                     }
                 }while(iss4);
             }
