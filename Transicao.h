@@ -14,8 +14,7 @@ class Transicao{
    public:  
     Estado *estadoDestino;
     string simboloTransicao;     
-  
-
+    
     // construtor
     //Transicao(Estado *ed, string s);
     // metodos

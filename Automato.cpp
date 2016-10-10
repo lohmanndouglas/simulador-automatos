@@ -24,9 +24,10 @@ Automato::Automato(string arquivoEntrada){
             iss >> sub;
             if(sub != ""){
                 // cout << "Estado: " << sub << endl;
-                mapStringInt[sub].nome = sub;
-                mapStringInt[sub].inicial = false;
-                mapStringInt[sub].aceitavel = false;
+                mapStringInt[sub] = new Estado();
+                mapStringInt[sub]->nome = sub;
+                mapStringInt[sub]->inicial = false;
+                mapStringInt[sub]->aceitavel = false;
                 quantidadeEstados++;
             }
         }while(iss);
@@ -36,7 +37,7 @@ Automato::Automato(string arquivoEntrada){
         cout << "Alfabeto: "<< alf << endl; 
        
         getline(arq, data); // estado inicial
-        mapStringInt[data].inicial = true;
+        mapStringInt[data]->inicial = true;
         cout << "Estado inicial: "<< data << endl; 
        
         getline(arq, data); // estados finais 
@@ -48,7 +49,7 @@ Automato::Automato(string arquivoEntrada){
             iss2 >> sub;
             if(sub != ""){
                 cout << "Estado aceitavel: " << sub << endl;
-                mapStringInt[sub].aceitavel = true;
+                mapStringInt[sub]->aceitavel = true;
             }
         }while(iss2);
 
@@ -70,14 +71,12 @@ Automato::Automato(string arquivoEntrada){
                         cout << "   Do estado " << estA ;
                         cout << " com o simbolo " << sub;
                         cout << " vai para " << estadosPos << endl;
-                        //mapStringInt[estadosPos].nome = "estadosPos";
-                        mapStringInt[estA].mapStringTransicao[sub].simboloTransicao = sub; 
-                        mapStringInt[estA].mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
+                        mapStringInt[estA]->mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
                     }
                 }while(iss4);
             }
         }while(iss3);
-
+        // cout<< mapStringInt["q1"]->mapStringTransicao["1"].estadoDestino->nome << endl;
         arq.close();
 
     } else{
