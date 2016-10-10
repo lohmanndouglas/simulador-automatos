@@ -1,7 +1,6 @@
 #include "Transicao.h"
 
-Transicao::Transicao(string ei, string ef, string s){
-	estadoInicial = ei;
-    estadoFinal = ef;
+Transicao::Transicao(Estado *ed, string s){
+    estadoDestino = ed;
     simboloTransicao = s; 
 }

@@ -4,23 +4,29 @@
 #include <iostream>
 #include <string>
 #include "Estado.h"
-
+#include <boost/unordered_map.hpp>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
 class Automato{
-    
     // variaveis
-    Estado listastado[];
+    Estado *listaEstados;
     int quantidadeEstados;
-    
+    Estado estadoInicial;
+    Estado estadosAceitaveis[];
+    //map <string, int> mapeamento;
+    boost::unordered_map <string, Estado>  mapStringInt;
+	// boost::unordered_map <std::string, Atributos>::iterator verify;
+  
   public:
 
     // construtor
-    Automato(int qtdEstados);
+    Automato(string arquivoEntrada);
 
     // metodos
-    int getAndar_atual();
+    // void addTransicao(string estadoInicial, string estadoFinal, string simbolo);
 
 };
 #endif

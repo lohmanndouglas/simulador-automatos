@@ -11,7 +11,7 @@ MODULE=main.x
 # files to be compiled into objects; otherwise, filenames matching *.cpp
 # will be used.
 #---
-SRCS= main.cpp Elevador.cpp
+SRCS= main.cpp Transicao.cpp Estado.cpp Automato.cpp 
 
 
 
