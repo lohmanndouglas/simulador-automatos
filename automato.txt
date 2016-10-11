@@ -1,10 +1,57 @@
-q1 q2
-0 1
+a b
+0 1 e
+a
+b
+- - b
+b b,a -
+
+
+
+q1 q2 q43 e1 666
+0 1 3
 q1
-q2
-q1,q23,q4,q6 q2
-q1 q1,3,e1,5
+q2 666
+q2,666,q1,q2 q2,e1 q2
+q1 q1,q2 e1
 
 
 
 fsdf
+
+
+
+
+
+//int Automato::ComputarString(string arquivoStringEntrada){
+    // ifstream arq;
+    // arq.open(arquivoStringEntrada.c_str());
+    // string data;
+    // string simbolo;
+    // string atual = estadoInicial;
+    // string tmp;
+    // if (arq.is_open() && arq != NULL){
+    //     getline(arq, data);
+    //     while(!arq.fail()){
+    //         cout << " ** ComputarString: " << data << " **"<< endl;
+
+    //         for(int i=0; i < data.length();i++){ //consumir todos os simbolos da string
+    //             simbolo = data[i];
+    //             cout << "  -Consome simbolo: " << simbolo; 
+    //             tmp = mapStringInt[atual]->mapStringTransicao[simbolo].estadoDestino->nome;
+    //             atual = tmp;
+    //             cout << " | Vai para estado: " << atual << endl;
+    //         }
+    //         if(mapStringInt[atual]->aceitavel){
+    //             cout << " ++ Aceita string ++ " << endl << endl;
+    //             //return 1;
+    //         } else {
+    //             cout << " ++ Rejeita string ++ " << endl << endl;
+    //             //return 0;           
+    //         }
+    //         getline(arq, data);
+    //     }
+    //     arq.close();
+    // }else{
+       // cout << "Erro: Arquivo de Entrada" << endl;
+    //}
+//}
