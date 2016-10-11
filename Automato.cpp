@@ -91,15 +91,15 @@ Automato::Automato(string arquivoEntrada){
 
         // ****************************************************** //
         // ********* TESTE PARA LISTA DE TRANSIÇOES ************* //
-        string estadoDesejado = "b";
-        list<Transicao>::iterator i;
-        cout << "|+++++++++++++++++++++++++++++++++++++++++++++++++++++|" << endl;
-        cout << "  TESTE: imprimir lista de Transições para estado " << estadoDesejado << endl;
-        for (i = mapStringInt[estadoDesejado]->listaTransicoes.begin(); i != mapStringInt[estadoDesejado]->listaTransicoes.end(); ++i){
-        	cout << "   Simbolo " << i->simboloTransicao;
-        	cout << " --->  " << i->estadoDestino->nome << endl;
-        }
-        cout << "|+++++++++++++++++++++++++++++++++++++++++++++++++++++|" << endl;
+        // string estadoDesejado = "b";
+        // list<Transicao>::iterator i;
+        // cout << "|+++++++++++++++++++++++++++++++++++++++++++++++++++++|" << endl;
+        // cout << "  TESTE: imprimir lista de Transições para estado " << estadoDesejado << endl;
+        // for (i = mapStringInt[estadoDesejado]->listaTransicoes.begin(); i != mapStringInt[estadoDesejado]->listaTransicoes.end(); ++i){
+        // 	cout << "   Simbolo " << i->simboloTransicao;
+        // 	cout << " --->  " << i->estadoDestino->nome << endl;
+        // }
+        // cout << "|+++++++++++++++++++++++++++++++++++++++++++++++++++++|" << endl;
         // ****************************************************** // 
 
     } else{
@@ -135,11 +135,11 @@ int Automato::computarString(string inputString, string estadoAtual){
 	//cout << " Simbolo: " << a << endl;
 
     if(mapStringInt[estadoAtual]->aceitavel && inputString.length() <= 0){
-       	cout << " ++ Aceita string ++ " << endl << endl;
+       	cout << "    -Aceita" << endl;
        	return 1;
 	} 
 	if(!(mapStringInt[estadoAtual]->aceitavel) && inputString.length() <= 0) {
-       	cout << " ++ Rejeita string ++ " << endl << endl;
+       	cout << "    -Rejeita " << endl;
        	return 0;           
     }
 
