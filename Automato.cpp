@@ -88,26 +88,11 @@ Automato::Automato(string arquivoEntrada){
         }while(iss3);
         arq.close();
         cout << " +===== Automato Criado =====+ " << endl;
-
-        // ****************************************************** //
-        // ********* TESTE PARA LISTA DE TRANSIÇOES ************* //
-        // string estadoDesejado = "b";
-        // list<Transicao>::iterator i;
-        // cout << "|+++++++++++++++++++++++++++++++++++++++++++++++++++++|" << endl;
-        // cout << "  TESTE: imprimir lista de Transições para estado " << estadoDesejado << endl;
-        // for (i = mapStringInt[estadoDesejado]->listaTransicoes.begin(); i != mapStringInt[estadoDesejado]->listaTransicoes.end(); ++i){
-        // 	cout << "   Simbolo " << i->simboloTransicao;
-        // 	cout << " --->  " << i->estadoDestino->nome << endl;
-        // }
-        // cout << "|+++++++++++++++++++++++++++++++++++++++++++++++++++++|" << endl;
-        // ****************************************************** // 
-
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
         cout << "Automato não foi criado";
     }
 }
-
 
 int Automato::computar(string arquivoStringEntrada){
     ifstream arq;
@@ -116,8 +101,12 @@ int Automato::computar(string arquivoStringEntrada){
     if (arq.is_open() && arq != NULL){
         getline(arq, data);
         while(!arq.fail()){
-        	cout << " ** ComputarString: " << data << " **"<< endl;
-        	computarString(data, estadoInicial);
+        	cout << " ** String: " << data ;
+        	if(computarString(data, estadoInicial)){
+				cout << "    - Aceita" << endl;
+        	}else{
+        		cout << "    - Rejeita" << endl;
+        	}
             getline(arq, data);
         }
         arq.close();
@@ -127,51 +116,28 @@ int Automato::computar(string arquivoStringEntrada){
 }
 
 int Automato::computarString(string inputString, string estadoAtual){
-	//cout << " ESTATO ATUAL: " << estadoAtual << endl;
 	list<Transicao>::iterator i;
 	string a; 
 	string b;
 	a = inputString[0];
-	//cout << " Simbolo: " << a << endl;
-
-    if(mapStringInt[estadoAtual]->aceitavel && inputString.length() <= 0){
-       	cout << "    -Aceita" << endl;
+	int ver = 0;
+    if(mapStringInt[estadoAtual]->aceitavel && inputString.length() <= 0 || \
+    	(inputString == "-" && mapStringInt[estadoAtual]->aceitavel)){
        	return 1;
 	} 
-	if(!(mapStringInt[estadoAtual]->aceitavel) && inputString.length() <= 0) {
-       	cout << "    -Rejeita " << endl;
+	if(!(mapStringInt[estadoAtual]->aceitavel) && inputString.length() <= 0 || \
+	 (inputString == "-" && !(mapStringInt[estadoAtual]->aceitavel))){
        	return 0;           
     }
-
-	//b = i->simboloTransicao;
-    for (i = mapStringInt[estadoAtual]->listaTransicoes.begin(); i != mapStringInt[estadoAtual]->listaTransicoes.end(); ++i){
+    for (i = mapStringInt[estadoAtual]->listaTransicoes.begin(); \
+    	i != mapStringInt[estadoAtual]->listaTransicoes.end(); ++i){
         b = i->simboloTransicao;
     	if (a == b){ // se o simbolo de entrada é igual ao simbolo da transição 
-    		// chama recursao
-         	//cout << " Recursão computarString("<< inputString.substr(1,inputString.length())<< ", " << i->estadoDestino->nome << ")" << endl;
-        	computarString(inputString.substr(1,inputString.length()),i->estadoDestino->nome);
-        	//cout << " --->  " << i->estadoDestino->nome << endl;
-        	//computarString(,i->estadoDestino->nome);
+        	ver += computarString(inputString.substr(1,inputString.length()),i->estadoDestino->nome);
     	}
     	if (b == "e"){
-    		computarString(inputString,i->estadoDestino->nome);
-    	} // se é uma trnasicao com epsilon
+    		ver += computarString(inputString,i->estadoDestino->nome);
+    	} // se é uma transicao com epsilon
     }
-	//return 1;
+    return ver;
 }
-
-
-           // for(int i=0; i < data.length();i++){ //consumir todos os simbolos da string
-           //      simbolo = data[i];
-           //      cout << "  -Consome simbolo: " << simbolo; 
-           //      tmp = mapStringInt[atual]->mapStringTransicao[simbolo].estadoDestino->nome;
-           //      atual = tmp;
-           //      cout << " | Vai para estado: " << atual << endl;
-           //  }
-           //  if(mapStringInt[atual]->aceitavel){
-           //      cout << " ++ Aceita string ++ " << endl << endl;
-           //      //return 1;
-           //  } else {
-           //      cout << " ++ Rejeita string ++ " << endl << endl;
-           //      //return 0;           
-           //  }
