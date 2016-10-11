@@ -59,7 +59,7 @@ Automato::Automato(string arquivoEntrada){
         do {
             string estA;
             iss3 >> estA;
-            if(estA != ""){ // para o estado sub
+            if(estA != ""){ // para o estado estA
                 getline(arq, data);
                 istringstream iss4(alf);
                 istringstream iss5(data); 
@@ -71,8 +71,15 @@ Automato::Automato(string arquivoEntrada){
                     if(sub != ""){ // para cada letra do alfabeto
                         cout << "   Do estado " << estA ;
                         cout << " com o simbolo " << sub;
-                        cout << " vai para " << estadosPos << endl;
-                        mapStringInt[estA]->mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
+                        string estDest;
+                        istringstream iss6(estadosPos);
+                        cout << " vai para ";                        
+                        while(getline(iss6,estDest,',')){
+                        	cout << estDest << " ";
+                        } 
+                        cout << endl;
+                        // Adiciona na lista de transições do estado estA a transição <sub, estadoPos>
+                        //mapStringInt[estA]->mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
                     }
                 }while(iss4);
             }
