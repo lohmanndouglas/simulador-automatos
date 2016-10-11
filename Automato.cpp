@@ -10,8 +10,7 @@ Automato::Automato(string arquivoEntrada){
     string est;
 
     if (arq.is_open() && arq != NULL){
-        cout << "Lendo arquivo" << endl; 
-        cout << "=============" << endl; 
+        cout << " +===== Lendo arquivo  ======+ " << endl; 
        
         getline(arq, est); // estados
         cout << "Estados: "<< est << endl; 
@@ -76,18 +75,28 @@ Automato::Automato(string arquivoEntrada){
                         cout << " vai para ";                        
                         while(getline(iss6,estDest,',')){
                         	cout << estDest << " ";
+                        	Transicao tempTrans;
+                        	tempTrans.simboloTransicao = sub;
+                        	tempTrans.estadoDestino = mapStringInt[estDest];
+                        	mapStringInt[estA]->listaTransicoes.push_back(tempTrans);
                         } 
                         cout << endl;
-                        // Adiciona na lista de transições do estado estA a transição <sub, estadoPos>
-                        //mapStringInt[estA]->mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
                     }
                 }while(iss4);
             }
         }while(iss3);
-        // cout<< mapStringInt["q1"]->mapStringTransicao["1"].estadoDestino->nome << endl;
+
+        list<Transicao>::iterator i;
+        cout << "imprimir lista de Transições para estado q1" << endl;
+        for (i = mapStringInt["q1"]->listaTransicoes.begin(); i != mapStringInt["q1"]->listaTransicoes.end(); ++i){
+        	cout << "Simbolo " << i->simboloTransicao;
+        	cout << " --->> " << i->estadoDestino->nome << endl;
+        }
+        
+
+        //cout<< mapStringInt["q1"]->listaTransicoes << endl;
         arq.close();
         cout << " +===== Automato Criado =====+ " << endl << endl; 
-
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
         cout << "Automato não foi criado" << endl;
@@ -95,35 +104,35 @@ Automato::Automato(string arquivoEntrada){
 }
 
 int Automato::ComputarString(string arquivoStringEntrada){
-    ifstream arq;
-    arq.open(arquivoStringEntrada.c_str());
-    string data;
-    string simbolo;
-    string atual = estadoInicial;
-    string tmp;
-    if (arq.is_open() && arq != NULL){
-        getline(arq, data);
-        while(!arq.fail()){
-            cout << " ** ComputarString: " << data << " **"<< endl;
+    // ifstream arq;
+    // arq.open(arquivoStringEntrada.c_str());
+    // string data;
+    // string simbolo;
+    // string atual = estadoInicial;
+    // string tmp;
+    // if (arq.is_open() && arq != NULL){
+    //     getline(arq, data);
+    //     while(!arq.fail()){
+    //         cout << " ** ComputarString: " << data << " **"<< endl;
 
-            for(int i=0; i < data.length();i++){ //consumir todos os simbolos da string
-                simbolo = data[i];
-                cout << "  -Consome simbolo: " << simbolo; 
-                tmp = mapStringInt[atual]->mapStringTransicao[simbolo].estadoDestino->nome;
-                atual = tmp;
-                cout << " | Vai para estado: " << atual << endl;
-            }
-            if(mapStringInt[atual]->aceitavel){
-                cout << " ++ Aceita string ++ " << endl << endl;
-                //return 1;
-            } else {
-                cout << " ++ Rejeita string ++ " << endl << endl;
-                //return 0;           
-            }
-            getline(arq, data);
-        }
-        arq.close();
-    }else{
+    //         for(int i=0; i < data.length();i++){ //consumir todos os simbolos da string
+    //             simbolo = data[i];
+    //             cout << "  -Consome simbolo: " << simbolo; 
+    //             tmp = mapStringInt[atual]->mapStringTransicao[simbolo].estadoDestino->nome;
+    //             atual = tmp;
+    //             cout << " | Vai para estado: " << atual << endl;
+    //         }
+    //         if(mapStringInt[atual]->aceitavel){
+    //             cout << " ++ Aceita string ++ " << endl << endl;
+    //             //return 1;
+    //         } else {
+    //             cout << " ++ Rejeita string ++ " << endl << endl;
+    //             //return 0;           
+    //         }
+    //         getline(arq, data);
+    //     }
+    //     arq.close();
+    // }else{
         cout << "Erro: Arquivo de Entrada" << endl;
-    }
+    //}
 }

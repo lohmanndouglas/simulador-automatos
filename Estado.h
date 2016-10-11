@@ -5,6 +5,7 @@
 #include <string>
 #include "Transicao.h"
 #include <boost/unordered_map.hpp>
+#include <list>
 
 using namespace std;
 
@@ -14,7 +15,9 @@ class Estado{
   	string nome;
   	bool inicial;
     bool aceitavel;
-    boost::unordered_map <string, Transicao>  mapStringTransicao;
+ // lista de transicoes possiveis
+    list<Transicao> listaTransicoes;
+    //boost::unordered_map <string, Transicao>  mapStringTransicao;
 
     // list<Transicao> listaTransicao;
 //    HallButton *hall_buttons[NUMBER_OF_FLOORS];
