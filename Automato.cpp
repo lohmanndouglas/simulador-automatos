@@ -10,8 +10,7 @@ Automato::Automato(string arquivoEntrada){
     string est;
 
     if (arq.is_open() && arq != NULL){
-        cout << "Lendo arquivo" << endl; 
-        cout << "=============" << endl; 
+        cout << " +===== Lendo arquivo  ======+ " << endl; 
        
         getline(arq, est); // estados
         cout << "Estados: "<< est << endl; 
@@ -59,7 +58,7 @@ Automato::Automato(string arquivoEntrada){
         do {
             string estA;
             iss3 >> estA;
-            if(estA != ""){ // para o estado sub
+            if(estA != ""){ // para o estado estA
                 getline(arq, data);
                 istringstream iss4(alf);
                 istringstream iss5(data); 
@@ -69,54 +68,76 @@ Automato::Automato(string arquivoEntrada){
                     iss4 >> sub;
                     iss5 >> estadosPos;
                     if(sub != ""){ // para cada letra do alfabeto
-                        cout << "   Do estado " << estA ;
-                        cout << " com o simbolo " << sub;
-                        cout << " vai para " << estadosPos << endl;
-                        mapStringInt[estA]->mapStringTransicao[sub].estadoDestino = mapStringInt[estadosPos];
+                        string estDest;
+                        istringstream iss6(estadosPos);                     
+                        while(getline(iss6,estDest,',')){
+                        	if(estDest != "-"){
+                        		cout << "Do estado " << estA;
+                       			cout << " com o simbolo " << sub;
+		                        cout << " vai para ";   
+                        		cout << estDest << endl;
+                        		Transicao tempTrans;
+                        		tempTrans.simboloTransicao = sub;
+                        		tempTrans.estadoDestino = mapStringInt[estDest];
+                        		mapStringInt[estA]->listaTransicoes.push_back(tempTrans);
+                        	}
+                        } 
                     }
                 }while(iss4);
             }
         }while(iss3);
-        // cout<< mapStringInt["q1"]->mapStringTransicao["1"].estadoDestino->nome << endl;
         arq.close();
-        cout << " +===== Automato Criado =====+ " << endl << endl; 
-
+        cout << " +===== Automato Criado =====+ " << endl;
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
-        cout << "Automato não foi criado" << endl;
+        cout << "Automato não foi criado";
     }
 }
 
-int Automato::ComputarString(string arquivoStringEntrada){
+int Automato::computar(string arquivoStringEntrada){
     ifstream arq;
     arq.open(arquivoStringEntrada.c_str());
     string data;
-    string simbolo;
-    string atual = estadoInicial;
-    string tmp;
     if (arq.is_open() && arq != NULL){
         getline(arq, data);
         while(!arq.fail()){
-            cout << " ** ComputarString: " << data << " **"<< endl;
-
-            for(int i=0; i < data.length();i++){ //consumir todos os simbolos da string
-                simbolo = data[i];
-                cout << "  -Consome simbolo: " << simbolo; 
-                tmp = mapStringInt[atual]->mapStringTransicao[simbolo].estadoDestino->nome;
-                atual = tmp;
-                cout << " | Vai para estado: " << atual << endl;
-            }
-            if(mapStringInt[atual]->aceitavel){
-                cout << " ++ Aceita string ++ " << endl << endl;
-                //return 1;
-            } else {
-                cout << " ++ Rejeita string ++ " << endl << endl;
-                //return 0;           
-            }
+        	cout << " ** String: " << data ;
+        	if(computarString(data, estadoInicial)){
+				cout << "    - Aceita" << endl;
+        	}else{
+        		cout << "    - Rejeita" << endl;
+        	}
             getline(arq, data);
         }
         arq.close();
     }else{
         cout << "Erro: Arquivo de Entrada" << endl;
     }
+}
+
+int Automato::computarString(string inputString, string estadoAtual){
+	list<Transicao>::iterator i;
+	string a; 
+	string b;
+	a = inputString[0];
+	int ver = 0;
+    if(mapStringInt[estadoAtual]->aceitavel && inputString.length() <= 0 || \
+    	(inputString == "-" && mapStringInt[estadoAtual]->aceitavel)){
+       	return 1;
+	} 
+	if(!(mapStringInt[estadoAtual]->aceitavel) && inputString.length() <= 0 || \
+	 (inputString == "-" && !(mapStringInt[estadoAtual]->aceitavel))){
+       	return 0;           
+    }
+    for (i = mapStringInt[estadoAtual]->listaTransicoes.begin(); \
+    	i != mapStringInt[estadoAtual]->listaTransicoes.end(); ++i){
+        b = i->simboloTransicao;
+    	if (a == b){ // se o simbolo de entrada é igual ao simbolo da transição 
+        	ver += computarString(inputString.substr(1,inputString.length()),i->estadoDestino->nome);
+    	}
+    	if (b == "e"){
+    		ver += computarString(inputString,i->estadoDestino->nome);
+    	} // se é uma transicao com epsilon
+    }
+    return ver;
 }

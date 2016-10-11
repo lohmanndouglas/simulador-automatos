@@ -9,9 +9,6 @@ using namespace std;
 int main(){
   
   Automato a("automato.txt");
-  a.ComputarString("inputString.txt");
+  a.computar("inputString.txt");
   return 0;
 } 
-
-
-//  Elevador e(2,6);

@@ -11,14 +11,13 @@
 using namespace std;
 
 class Automato{
-    // variaveis
+
     int quantidadeEstados;
     string estadoInicial;
     boost::unordered_map <string, Estado*>  mapStringInt;
-  
+    int computarString(string inputString, string estadoAtual);
   public:
-    // construtor
     Automato(string arquivoEntrada);
-    int ComputarString(string arquivoStringEntrada);
+    int computar(string arquivoStringEntrada);
 };
 #endif
