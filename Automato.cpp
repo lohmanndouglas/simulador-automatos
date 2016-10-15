@@ -41,13 +41,12 @@ Automato::Automato(string arquivoEntrada){
         cout << "Estado inicial: "<< data << endl; 
        
         getline(arq, data); // estados finais 
-        // cout << "Estado(s) fina(l|is): \n"<< data << endl;
     
         istringstream iss2(data);
         do {
             string sub;
             iss2 >> sub;
-            if(sub != ""){
+            if(sub != "" && sub != "-"){
                 cout << "Estado aceitavel: " << sub << endl;
                 mapStringInt[sub]->aceitavel = true;
             }
@@ -89,8 +88,6 @@ Automato::Automato(string arquivoEntrada){
         arq.close();
         cout << " +===== Automato Criado =====+ " << endl;
         string aa;
-        //aa = "q0";
-        //cout << "find: " << mapStringInt.find(aa) << endl;
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
         cout << "Automato não foi criado";
@@ -108,12 +105,7 @@ int Automato::computar(string arquivoStringEntrada){
         	cout << " ** String: " << data ;
        	
        	    list<string> listaLoop;
-       	 //    listaLoop.push_back("a000");
-       	 //    //string kkk = listaLoop[0][1];
-       	 //    cout << "AAAAAA: " << endl;
-         //    list<string>::iterator i;
-	        // for(i=listaLoop.begin(); i != listaLoop.end(); ++i) cout << *i << " ";
-	        // cout << endl;
+
         	if(computarString(data, estadoInicial, listaLoop)){
 				cout << "    - Aceita" << endl;
         	}else{
@@ -148,23 +140,16 @@ int Automato::computarString(string inputString, string estadoAtual, list<string
     		list<string> copia; 
         	ver += computarString(inputString.substr(1,inputString.length()),i->estadoDestino->nome, copia);
     	}
-
-    	// verificar se estado atual esta em l
-    	//int aa = find(l.begin(), l.end(), estadoAtual);
     	int status = 0;
-    	if (find(l.begin(), l.end(), estadoAtual) != l.end()){
+    	if (find(l.begin(), l.end(), i->estadoDestino->nome) != l.end()){
     		//cout << "aafdsfdsfdsaa" << endl;
     		status = 1;
     	}
     	if (b == "e" && !(status)){ // verficiar se ta na lista
-    		// copia profunda
     		list<string> copia;
     		string s;
             list<string>::iterator interatorL;
-            //cout << "Entra" << endl;
 	        for(interatorL=l.begin(); interatorL != l.end(); ++interatorL){ 
-	        	//cout << "Elementos da lista: " << endl;
-	        	//cout << *interatorL << endl;
 	        	string s = *interatorL;
 	        	copia.push_back(s);
 	    	}
