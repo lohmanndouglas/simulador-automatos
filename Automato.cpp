@@ -41,13 +41,12 @@ Automato::Automato(string arquivoEntrada){
         cout << "Estado inicial: "<< data << endl; 
        
         getline(arq, data); // estados finais 
-        // cout << "Estado(s) fina(l|is): \n"<< data << endl;
     
         istringstream iss2(data);
         do {
             string sub;
             iss2 >> sub;
-            if(sub != ""){
+            if(sub != "" && sub != "-"){
                 cout << "Estado aceitavel: " << sub << endl;
                 mapStringInt[sub]->aceitavel = true;
             }
@@ -88,6 +87,7 @@ Automato::Automato(string arquivoEntrada){
         }while(iss3);
         arq.close();
         cout << " +===== Automato Criado =====+ " << endl;
+        string aa;
     } else{
         cout << "Erro ao abrir o arquivo: " << arquivoEntrada << endl;
         cout << "Automato não foi criado";
@@ -98,11 +98,15 @@ int Automato::computar(string arquivoStringEntrada){
     ifstream arq;
     arq.open(arquivoStringEntrada.c_str());
     string data;
+
     if (arq.is_open() && arq != NULL){
         getline(arq, data);
         while(!arq.fail()){
         	cout << " ** String: " << data ;
-        	if(computarString(data, estadoInicial)){
+       	
+       	    list<string> listaLoop;
+
+        	if(computarString(data, estadoInicial, listaLoop)){
 				cout << "    - Aceita" << endl;
         	}else{
         		cout << "    - Rejeita" << endl;
@@ -115,7 +119,7 @@ int Automato::computar(string arquivoStringEntrada){
     }
 }
 
-int Automato::computarString(string inputString, string estadoAtual){
+int Automato::computarString(string inputString, string estadoAtual, list<string> l){
 	list<Transicao>::iterator i;
 	string a; 
 	string b;
@@ -125,18 +129,32 @@ int Automato::computarString(string inputString, string estadoAtual){
     	(inputString == "-" && mapStringInt[estadoAtual]->aceitavel)){
        	return 1;
 	} 
-	if(!(mapStringInt[estadoAtual]->aceitavel) && inputString.length() <= 0 || \
-	 (inputString == "-" && !(mapStringInt[estadoAtual]->aceitavel))){
+	if(!(mapStringInt[estadoAtual]->aceitavel) && inputString.length() <= 0){
        	return 0;           
     }
+	// percore a lista de transições do estado atual
     for (i = mapStringInt[estadoAtual]->listaTransicoes.begin(); \
     	i != mapStringInt[estadoAtual]->listaTransicoes.end(); ++i){
         b = i->simboloTransicao;
-    	if (a == b){ // se o simbolo de entrada é igual ao simbolo da transição 
-        	ver += computarString(inputString.substr(1,inputString.length()),i->estadoDestino->nome);
+    	if (a == b){ // se o simbolo de entrada é igual ao simbolo da transição
+    		list<string> copia; 
+        	ver += computarString(inputString.substr(1,inputString.length()),i->estadoDestino->nome, copia);
     	}
-    	if (b == "e"){
-    		ver += computarString(inputString,i->estadoDestino->nome);
+    	int status = 0;
+    	if (find(l.begin(), l.end(), i->estadoDestino->nome) != l.end()){
+    		//cout << "aafdsfdsfdsaa" << endl;
+    		status = 1;
+    	}
+    	if (b == "e" && !(status)){ // verficiar se ta na lista
+    		list<string> copia;
+    		string s;
+            list<string>::iterator interatorL;
+	        for(interatorL=l.begin(); interatorL != l.end(); ++interatorL){ 
+	        	string s = *interatorL;
+	        	copia.push_back(s);
+	    	}
+	    	copia.push_back(i->estadoDestino->nome);
+    		ver += computarString(inputString,i->estadoDestino->nome, copia);
     	} // se é uma transicao com epsilon
     }
     return ver;
